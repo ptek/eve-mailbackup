@@ -205,8 +205,8 @@ func GetMail(auth Authentication, char Character, mailHeader MailHeader) Mail {
 	return mail
 }
 
-func SaveMail(mail Mail) {
-	file, err := os.Create(fmt.Sprintf("mail/%v %d.txt", mail.Header.Time.Format(time.RFC3339), mail.Header.Id))
+func SaveMail(directory string, mail Mail) {
+	file, err := os.Create(fmt.Sprintf("%s/%v %d.txt", directory, mail.Header.Time.Format(time.RFC3339), mail.Header.Id))
 	if err != nil {
 		panic(err)
 	}
@@ -242,6 +242,6 @@ func main() {
 	for _, mailHeader := range mailHeaders {
 		fmt.Println(mailHeader.Subject)
 		mail := GetMail(auth, char, mailHeader)
-		SaveMail(mail)
+		SaveMail("eve-mail", mail)
 	}
 }
